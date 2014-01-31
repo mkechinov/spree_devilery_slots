@@ -15,7 +15,11 @@ function SpreeDeliveryOptions() {
   };
 
   this.update_delivery_time_options = function() {
-    delivery_time_options = $.parseJSON($('.delivery-time-options').attr("data"));
+    delivery_time_options = null;
+
+    if (($('.delivery-time-options').attr("data")) != undefined) {
+      delivery_time_options = $.parseJSON($('.delivery-time-options').attr("data"));
+    }
 
     if (delivery_time_options){
       weekdays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
