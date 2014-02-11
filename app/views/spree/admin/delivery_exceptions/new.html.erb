@@ -1,0 +1,25 @@
+<%= render :partial => 'spree/admin/shared/configuration_menu' %>
+
+<% content_for :page_title do %>
+  <%= 'New delivery exception' %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li>
+    <%= button_link_to 'Back to delivery exceptions list', spree.admin_delivery_exceptions_path, :icon => 'icon-arrow-left' %>
+  </li>
+<% end %>
+
+<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @delivery_exception } %>
+
+<%= form_for [:admin, @delivery_exception] do |f| %>
+  <fieldset class="no-border-top">
+
+    <%= render :partial => 'form', :locals => { :f => f } %>
+
+    <div class="clear"></div>
+
+    <%= render :partial => 'spree/admin/shared/new_resource_links' %>
+
+  </fieldset>
+<% end %>

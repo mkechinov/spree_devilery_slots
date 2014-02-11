@@ -1,0 +1,39 @@
+<div>
+  <div class="alpha twelve columns">
+    <fieldset class="no-border-bottom">
+      <legend align="center"><%= Spree.t(:general_settings) %></legend>
+
+      <div class="alpha twelve columns">
+        <div  class="field">
+          <%= f.label :sequence, 'Sequence' %>
+          <br />
+          <%= f.number_field :sequence, value: f.object.sequence || Spree::DeliverySlot.next_sequence %>
+        </div>
+        <div  class="field">
+          <%= f.label :name, 'Name (will be visible to customers)' %>
+          <%= f.text_field :name, :class => 'fullwidth' %>
+        </div>
+        <div  class="field">
+          <% %w(Monday Tuesday Wednesday Thursday Friday Saturday Sunday).each do |wd| %>
+            <label>
+              <%= check_box_tag 'delivery_slot[days][]', wd, f.object.days.present? ? f.object.days.split(',').include?(wd) : false %>
+              <%= wd %>
+            </label>
+            <br />
+          <% end %>
+
+        </div>
+        <div  class="field">
+          <%= f.label :delay, 'Delay' %>
+          <br />
+          <%= f.number_field :delay %>
+        </div>
+        <div  class="field">
+          <%= f.label :max_orders, 'Max orders' %>
+          <br />
+          <%= f.number_field :max_orders %>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<%= render 'spree/admin/shared/configuration_menu' %>
+
+<% content_for :page_title do %>
+  <%= 'Delivery exceptions' %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li>
+    <%= button_link_to 'New delivery exception', new_object_url, :icon => 'icon-plus' %>
+  </li>
+<% end %>
+
+<% if @delivery_exceptions.any? %>
+  <table class="index">
+    <colgroup>
+      <col style="width: 15%">
+      <col style="width: 15%">
+      <col style="width: 15%">
+    </colgroup>
+    <thead>
+      <tr data-hook="rate_header">
+        <th>Date</th>
+        <th>Delivery slot</th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @delivery_exceptions.each do |delivery_exception|%>
+      <tr class="<%= cycle('odd', 'even')%>">
+        <td class="align-center"><%= delivery_exception.date %></td>
+        <td class="align-center"><%= delivery_exception.delivery_slot.full_name %></td>
+        <td class="actions">
+          <%= link_to_edit delivery_exception, :no_text => true %>
+          <%= link_to_delete delivery_exception, :no_text => true %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alpha twelve columns no-objects-found">
+    No delivery exceptions found,
+    <%= link_to Spree.t(:add_one), spree.new_admin_delivery_exception_path %>!
+  </div>
+<% end %>

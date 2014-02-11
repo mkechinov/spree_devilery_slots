@@ -1,0 +1,25 @@
+<%= render :partial => 'spree/admin/shared/configuration_menu' %>
+
+<% content_for :page_title do %>
+  <%= 'New delivery slot' %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li>
+    <%= button_link_to 'Back to delivery slots list', spree.admin_delivery_slots_path, :icon => 'icon-arrow-left' %>
+  </li>
+<% end %>
+
+<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @delivery_slot } %>
+
+<%= form_for [:admin, @delivery_slot] do |f| %>
+  <fieldset class="no-border-top">
+
+    <%= render :partial => 'form', :locals => { :f => f } %>
+
+    <div class="clear"></div>
+
+    <%= render :partial => 'spree/admin/shared/new_resource_links' %>
+
+  </fieldset>
+<% end %>

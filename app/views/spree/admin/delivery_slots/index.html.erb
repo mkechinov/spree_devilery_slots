@@ -1,0 +1,54 @@
+<%= render 'spree/admin/shared/configuration_menu' %>
+
+<% content_for :page_title do %>
+  <%= 'Delivery slots' %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li>
+    <%= button_link_to 'New delivery slot', new_object_url, :icon => 'icon-plus' %>
+  </li>
+<% end %>
+
+<% if @delivery_slots.any? %>
+  <table class="index">
+    <colgroup>
+      <col style="width: 15%">
+      <col style="width: 15%">
+      <col style="width: 10%">
+      <col style="width: 10%">
+      <col style="width: 10%">
+      <col style="width: 15%">
+    </colgroup>
+    <thead>
+      <tr data-hook="rate_header">
+        <th>Sequence</th>
+        <th>Name</th>
+        <th>Days</th>
+        <th>Delay</th>
+        <th>Max orders</th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @delivery_slots.each do |delivery_slot|%>
+      <tr class="<%= cycle('odd', 'even')%>">
+        <td class="align-center"><%= delivery_slot.sequence %></td>
+        <td class="align-center"><%= delivery_slot.name %></td>
+        <td class="align-center"><%= delivery_slot.days %></td>
+        <td class="align-center"><%= delivery_slot.delay %></td>
+        <td class="align-center"><%= delivery_slot.max_orders %></td>
+        <td class="actions">
+          <%= link_to_edit delivery_slot, :no_text => true %>
+          <%= link_to_delete delivery_slot, :no_text => true %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alpha twelve columns no-objects-found">
+    No delivery slots found,
+    <%= link_to Spree.t(:add_one), spree.new_admin_delivery_slot_path %>!
+  </div>
+<% end %>

@@ -1,0 +1,20 @@
+<div>
+  <div class="alpha twelve columns">
+    <fieldset class="no-border-bottom">
+      <legend align="center"><%= Spree.t(:general_settings) %></legend>
+
+      <div class="alpha twelve columns">
+        <div  class="field">
+          <%= f.label :date, 'Date' %>
+          <br />
+          <%= f.date_field :date %>
+        </div>
+        <div  class="field">
+          <%= f.label :delivery_slot_id, 'Delivery slot' %>
+          <br />
+          <%= f.select :delivery_slot_id, Spree::DeliverySlot.all.map{|d_s| [ds.full_name, d_s.id] } %>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>
