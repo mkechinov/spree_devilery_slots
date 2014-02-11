@@ -1,19 +1,26 @@
-# encoding: UTF-8
+$:.push File.expand_path("../lib", __FILE__)
+
+require 'spree_delivery_slots/version'
+
 Gem::Specification.new do |s|
+  s.version     = SpreeDeliverySlots::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.name        = 'spree_delivery_options'
-  s.version     = '2.1.9'
-  s.summary     = 'Adds delivery date and time during checkout'
-  s.description = ''
+
+  s.name        = 'spree_delivery_slots'
+  s.summary     = 'Adds delivery slots functionality'
+  s.description = 'You can manage your delivery slots in admin, specify cut-off hours for every slot, create exceptional dates'
+
+  s.homepage    = "https://github.com/AntonZh/spree_delivery_slots"
+
   s.required_ruby_version = '>= 2.0.0'
 
-  s.author    = 'Francisco Trindade'
-  s.email     = 'frank.trindade@gmail.com'
+  s.license = 'MIT'
 
-  s.files       = `git ls-files`.split("\n")
-  s.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.require_path = 'lib'
-  s.requirements << 'none'
+  s.author    = ['Anton Zhavoronkov']
+  s.email     = ['anton.zhavoronkov@gmail.com']
+
+  s.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README.md"]
+  s.test_files = Dir["spec/**/*"]
 
   s.add_dependency 'spree_core', '~> 2.1.3'
 

@@ -3,11 +3,7 @@ module SpreeDeliveryOptions
     require 'spree/core'
     isolate_namespace Spree
 
-    initializer "spree.spree_delivery_options.preferences", :after => "spree.environment" do |app|
-       SpreeDeliveryOptions::Config = SpreeDeliveryOptions::Configuration.new
-    end
-
-    engine_name 'spree_delivery_options'
+    engine_name 'spree_delivery_slots'
 
     config.autoload_paths += %W(#{config.root}/lib)
 
