@@ -1,4 +1,4 @@
-module SpreeDeliveryOptions
+module SpreeDeliverySlots
   class Engine < Rails::Engine
     require 'spree/core'
     isolate_namespace Spree

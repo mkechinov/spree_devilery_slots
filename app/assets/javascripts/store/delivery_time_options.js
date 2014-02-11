@@ -1,54 +1,54 @@
-function SpreeDeliveryOptions() {
+// function SpreeDeliveryOptions() {
 
-  var that = this;
+//   var that = this;
 
-  this.initializeDatePicker = function() {
-     $('#order_delivery_date').datepicker({dateFormat: "dd/mm/yy"});
-  };
+//   this.initializeDatePicker = function() {
+//      $('#order_delivery_date').datepicker({dateFormat: "dd/mm/yy"});
+//   };
 
-  this.initializeDeliveryTimeSelect = function() {
-    this.update_delivery_time_options();
+//   this.initializeDeliveryTimeSelect = function() {
+//     this.update_delivery_time_options();
 
-    $('#order_delivery_date').change(function(event){
-      that.update_delivery_time_options();
-    });
-  };
+//     $('#order_delivery_date').change(function(event){
+//       that.update_delivery_time_options();
+//     });
+//   };
 
-  this.update_delivery_time_options = function() {
-    delivery_time_options = null;
+//   this.update_delivery_time_options = function() {
+//     delivery_time_options = null;
 
-    if (($('.delivery-time-options').attr("data")) != undefined) {
-      delivery_time_options = $.parseJSON($('.delivery-time-options').attr("data"));
-    }
+//     if (($('.delivery-time-options').attr("data")) != undefined) {
+//       delivery_time_options = $.parseJSON($('.delivery-time-options').attr("data"));
+//     }
 
-    if (delivery_time_options){
-      weekdays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-      var dateParts = $('#order_delivery_date').val().split('/')
-      day_index = new Date(dateParts[2], dateParts[1]-1, dateParts[0]).getDay();
-      weekday = weekdays[day_index];
+//     if (delivery_time_options){
+//       weekdays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+//       var dateParts = $('#order_delivery_date').val().split('/')
+//       day_index = new Date(dateParts[2], dateParts[1]-1, dateParts[0]).getDay();
+//       weekday = weekdays[day_index];
 
-      day_options = delivery_time_options[weekday];
-      this.populate_delivery_time(day_options);
-    }
-  };
+//       day_options = delivery_time_options[weekday];
+//       this.populate_delivery_time(day_options);
+//     }
+//   };
 
-  this.populate_delivery_time = function(options) {
-    if (options) {
-      var arLen = options.length;
-      var newList = "";
-      for ( var i=0, len=arLen; i<len; ++i ){
-        newList = newList + '<option>' + options[i]+'</option>';
-      }
-      $('#order_delivery_time').html(newList);
-    } else {
-      $('#order_delivery_time').html("<option>No deliveries available on this date</option>");
-    }
-  };
+//   this.populate_delivery_time = function(options) {
+//     if (options) {
+//       var arLen = options.length;
+//       var newList = "";
+//       for ( var i=0, len=arLen; i<len; ++i ){
+//         newList = newList + '<option>' + options[i]+'</option>';
+//       }
+//       $('#order_delivery_time').html(newList);
+//     } else {
+//       $('#order_delivery_time').html("<option>No deliveries available on this date</option>");
+//     }
+//   };
 
-}
+// }
 
-$(document).ready(function() {
-  var deliveryOptions = new SpreeDeliveryOptions();
-  deliveryOptions.initializeDatePicker();
-  deliveryOptions.initializeDeliveryTimeSelect();
-});
+// $(document).ready(function() {
+//   var deliveryOptions = new SpreeDeliveryOptions();
+//   deliveryOptions.initializeDatePicker();
+//   deliveryOptions.initializeDeliveryTimeSelect();
+// });

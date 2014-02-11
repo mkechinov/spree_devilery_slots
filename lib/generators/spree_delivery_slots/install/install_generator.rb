@@ -1,4 +1,4 @@
-module SpreeDeliveryOptions
+module SpreeDeliverySlots
   module Generators
     class InstallGenerator < Rails::Generators::Base
 
@@ -7,8 +7,17 @@ module SpreeDeliveryOptions
       end
 
       def add_stylesheets
-        inject_into_file 'app/assets/stylesheets/store/all.css', " *= require store/spree_delivery_slots\n", :before => /\*\//, :verbose => true
-        inject_into_file 'app/assets/stylesheets/admin/all.css', " *= require admin/spree_delivery_slots\n", :before => /\*\//, :verbose => true
+        if File.exists?('app/assets/stylesheets/store/all.css')
+          inject_into_file 'app/assets/stylesheets/store/all.css', " *= require store/spree_delivery_slots\n", :before => /\*\//, :verbose => true
+        elsif File.exists?('app/assets/stylesheets/store/all.sass')
+          append_file 'app/assets/stylesheets/store/all.sass', "@import store/spree_delivery_slots\n"
+        end
+
+        if File.exists?('app/assets/stylesheets/admin/all.css')
+          inject_into_file 'app/assets/stylesheets/admin/all.css', " *= require admin/spree_delivery_slots\n", :before => /\*\//, :verbose => true
+        elsif File.exists?('app/assets/stylesheets/admin/all.sass')
+          append_file 'app/assets/stylesheets/admin/all.sass', "@import admin/spree_delivery_slots\n"
+        end
       end
 
       def add_migrations
