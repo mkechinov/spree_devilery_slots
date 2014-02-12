@@ -1,0 +1,17 @@
+<h5 class="stock-delivery-date-title">Delivery date and time</h5>
+
+<div id="delivery_date">
+  <div class="field">
+    <%= form.label :delivery_date, "Delivery date" %>
+    <%= form.text_field :delivery_date, value: (form.object.delivery_date || Date.current).strftime("%d/%m/%Y") %>
+  </div>
+  <div class="field">
+    <%= form.label :delivery_slot_id, "Delivery time" %>
+    <% slots = SpreeDeliverySlots.for(form.object.delivery_date || Time.current).map{|s| [s.name, s.id]} %>
+    <%= form.select :delivery_slot_id, slots %>
+  </div>
+  <div class="field">
+    <%= form.label :delivery_instructions, "Delivery Instructions/Comments" %>
+    <%= form.text_area :delivery_instructions %>
+  </div>
+</div>

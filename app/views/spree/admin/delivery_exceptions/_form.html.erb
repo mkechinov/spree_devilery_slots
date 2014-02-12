@@ -12,7 +12,7 @@
         <div  class="field">
           <%= f.label :delivery_slot_id, 'Delivery slot' %>
           <br />
-          <%= f.select :delivery_slot_id, Spree::DeliverySlot.all.map{|d_s| [ds.full_name, d_s.id] } %>
+          <%= f.select :delivery_slot_id, Spree::DeliverySlot.all.map{|d_s| [d_s.full_name, d_s.id] } %>
         </div>
       </div>
     </fieldset>

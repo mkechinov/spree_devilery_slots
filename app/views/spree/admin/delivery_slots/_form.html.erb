@@ -10,6 +10,11 @@
           <%= f.number_field :sequence, value: f.object.sequence || Spree::DeliverySlot.next_sequence %>
         </div>
         <div  class="field">
+          <%= f.label :enabled, 'Enabled' %>
+          <br />
+          <%= f.check_box :enabled %>
+        </div>
+        <div  class="field">
           <%= f.label :name, 'Name (will be visible to customers)' %>
           <%= f.text_field :name, :class => 'fullwidth' %>
         </div>
@@ -21,7 +26,11 @@
             </label>
             <br />
           <% end %>
-
+        </div>
+        <div  class="field">
+          <%= f.label :start_hour, 'Start hour' %>
+          <br />
+          <%= f.number_field :start_hour %>
         </div>
         <div  class="field">
           <%= f.label :delay, 'Delay' %>

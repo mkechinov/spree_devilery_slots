@@ -15,7 +15,9 @@
     <colgroup>
       <col style="width: 15%">
       <col style="width: 15%">
+      <col style="width: 15%">
       <col style="width: 10%">
+      <col style="width: 15%">
       <col style="width: 10%">
       <col style="width: 10%">
       <col style="width: 15%">
@@ -23,8 +25,10 @@
     <thead>
       <tr data-hook="rate_header">
         <th>Sequence</th>
+        <th>Enabled</th>
         <th>Name</th>
         <th>Days</th>
+        <th>Start hour</th>
         <th>Delay</th>
         <th>Max orders</th>
         <th class="actions"></th>
@@ -34,8 +38,10 @@
       <% @delivery_slots.each do |delivery_slot|%>
       <tr class="<%= cycle('odd', 'even')%>">
         <td class="align-center"><%= delivery_slot.sequence %></td>
+        <td class="align-center"><%= delivery_slot.enabled %></td>
         <td class="align-center"><%= delivery_slot.name %></td>
-        <td class="align-center"><%= delivery_slot.days %></td>
+        <td class="align-center"><%= delivery_slot.days.split(',').join("\n") %></td>
+        <td class="align-center"><%= delivery_slot.start_hour %></td>
         <td class="align-center"><%= delivery_slot.delay %></td>
         <td class="align-center"><%= delivery_slot.max_orders %></td>
         <td class="actions">
