@@ -1,3 +1,10 @@
-//= require jquery
-//= require store/delivery_time_options
-//= require store/jquery-ui-1.10.4.custom
+$(function () {
+  $('.available-delivery-slot').on('click', function () {
+    $('.selected-delivery-slot').removeClass('selected-delivery-slot');
+
+    $(this).addClass('selected-delivery-slot');
+
+    $('#order_delivery_date').val($(this).attr('data-date'));
+    $('#order_delivery_slot_id').val($(this).attr('data-slot-id'));
+  });
+});

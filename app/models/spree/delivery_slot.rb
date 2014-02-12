@@ -18,8 +18,16 @@ module Spree
     end
 
     class << self
-      def for_date(date)
-        where('days LIKE ?', "%#{Date::DAYNAMES[date.wday]}%").where('delay < ?', 24 - Time.current.hour)
+      def available_at(date)
+        res = where('days LIKE ?', "%#{Date::DAYNAMES[date.wday]}%").select do |slot|
+          slot_time = Time.at(date.to_time.to_i + slot.start_hour * 3600)
+
+          (slot_time - Time.current).round > (slot.delay * 3600)
+        end
+
+        res.select do |slot|
+          slot.orders.where(delivery_date: date).count < slot.max_orders
+        end
       end
 
       def next_sequence
@@ -29,6 +37,7 @@ module Spree
           1
         end
       end
+
     end
   end
 end

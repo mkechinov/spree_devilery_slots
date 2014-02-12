@@ -3,9 +3,10 @@
   %table
     %thead
       %th= Spree.t(:date)
-      %th= Spree.t(:time)
+      %th Slot
     %tbody
       %td= @order.delivery_date
+      %td= @order.delivery_slot.try(:name)
   .delivery-instructions
     %label= Spree.t(:delivery_instructions)
     %span

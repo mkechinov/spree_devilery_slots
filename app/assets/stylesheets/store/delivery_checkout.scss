@@ -18,13 +18,32 @@
       margin-right: 20px;
     }
   }
-
-  .delivery-time-options {
-    display: none;
-  }
 }
 
 #delivery_instructions textarea {
   width: 100%;
   min-height: 100px;
+}
+
+#delivery_date {
+  .unavailable-delivery-slot {
+    background-color: gray;
+  }
+
+  .available-delivery-slot {
+    cursor: pointer;
+  }
+
+  .available-delivery-slot:hover {
+    background-color: #f3f3f4;
+  }
+
+  .selected-delivery-slot {
+    background-color: #00adee;
+
+    &, &:hover {
+      background-color: #00adee;
+      color: #fff;
+    }
+  }
 }

@@ -7,7 +7,7 @@ module Spree
 
     class << self
       def excepted_slots_for_date(date)
-        where(date: date).pluck(:delivery_slot_id)
+        where(date: date).includes(:delivery_slot).map(&:delivery_slot)
       end
     end
   end
