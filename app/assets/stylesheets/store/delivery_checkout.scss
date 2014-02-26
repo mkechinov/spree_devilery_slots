@@ -1,7 +1,7 @@
 @import 'store/variables';
 
 #shipping_method {
-  .stock-delivery-date-title, .stock-delivery-instructions-title {
+  .stock-delivery-date-title, .stock-delivery-instructions-title, .stock-delivery-city-title {
     background-color: lighten($body_text_color, 70);
     text-align: center;
     text-transform: uppercase;
@@ -45,5 +45,13 @@
       background-color: #00adee;
       color: #fff;
     }
+  }
+
+  .discounted {
+    color: #FF0000;
+  }
+
+  .old_price {
+    text-decoration: line-through;
   }
 }

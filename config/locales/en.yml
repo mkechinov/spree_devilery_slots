@@ -2,3 +2,4 @@ en:
   spree:
     delivery_slots: Delivery slots
     delivery_exceptions: Delivery exceptions
+    delivery_cities: Delivery cities

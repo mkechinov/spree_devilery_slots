@@ -10,51 +10,69 @@
   </li>
 <% end %>
 
-<% if @delivery_slots.any? %>
-  <table class="index">
-    <colgroup>
-      <col style="width: 15%">
-      <col style="width: 15%">
-      <col style="width: 15%">
-      <col style="width: 10%">
-      <col style="width: 15%">
-      <col style="width: 10%">
-      <col style="width: 10%">
-      <col style="width: 15%">
-    </colgroup>
-    <thead>
-      <tr data-hook="rate_header">
-        <th>Sequence</th>
-        <th>Enabled</th>
-        <th>Name</th>
-        <th>Days</th>
-        <th>Start hour</th>
-        <th>Delay</th>
-        <th>Max orders</th>
-        <th class="actions"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @delivery_slots.each do |delivery_slot|%>
-      <tr class="<%= cycle('odd', 'even')%>">
-        <td class="align-center"><%= delivery_slot.sequence %></td>
-        <td class="align-center"><%= delivery_slot.enabled %></td>
-        <td class="align-center"><%= delivery_slot.name %></td>
-        <td class="align-center"><%= delivery_slot.days.split(',').join("\n") %></td>
-        <td class="align-center"><%= delivery_slot.start_hour %></td>
-        <td class="align-center"><%= delivery_slot.delay %></td>
-        <td class="align-center"><%= delivery_slot.max_orders %></td>
-        <td class="actions">
-          <%= link_to_edit delivery_slot, :no_text => true %>
-          <%= link_to_delete delivery_slot, :no_text => true %>
-        </td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
+<% if @delivery_slots.empty? %>
+    <div class="alpha twelve columns no-objects-found">
+      No delivery slots found,
+      <%= link_to Spree.t(:add_one), spree.new_admin_delivery_slot_path %>!
+    </div>
 <% else %>
-  <div class="alpha twelve columns no-objects-found">
-    No delivery slots found,
-    <%= link_to Spree.t(:add_one), spree.new_admin_delivery_slot_path %>!
-  </div>
+    <% Spree::DeliveryCity.all.each do |slot_city| %>
+        <b><%= slot_city.name %></b>
+        <% if slot_city.delivery_slots.any? %>
+            <table class="index">
+              <colgroup>
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 15%">
+                <col style="width: 15%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 5%">
+                <col style="width: 15%">
+                <col style="width: 5%">
+              </colgroup>
+              <thead>
+              <tr data-hook="rate_header">
+                <th>Sequence</th>
+                <th>Enabled</th>
+                <th>Name</th>
+                <th>Days</th>
+                <th>Start hour</th>
+                <th>Delay</th>
+                <th>Max orders</th>
+                <th>Price Next Days & Same Days</th>
+                <th>Discount Days</th>
+                <th>Discount Price</th>
+                <th class="actions"></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% slot_city.delivery_slots.each do |delivery_slot|%>
+                  <tr class="<%= cycle('odd', 'even')%>">
+                    <td class="align-center"><%= delivery_slot.sequence %></td>
+                    <td class="align-center"><%= delivery_slot.enabled %></td>
+                    <td class="align-center"><%= delivery_slot.name %></td>
+                    <td class="align-center"><%= delivery_slot.days.to_s.split(',').join("\n") %></td>
+                    <td class="align-center"><%= delivery_slot.start_hour %></td>
+                    <td class="align-center"><%= delivery_slot.delay %></td>
+                    <td class="align-center"><%= delivery_slot.max_orders %></td>
+                    <td class="align-center"><%= delivery_slot.price_next_day %> & <%= delivery_slot.price_same_day %> </td>
+                    <td class="align-center"><%= delivery_slot.discount_days.to_s.split(',').join("\n") %></td>
+                    <td class="align-center"><%= delivery_slot.discount_price %></td>
+                    <td class="actions">
+                      <%= link_to_edit delivery_slot, :no_text => true %>
+                      <%= link_to_delete delivery_slot, :no_text => true %>
+                    </td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+        <% else %>
+            <div>
+              No delivery slots for this cities
+            </div>
+        <% end %>
+    <% end %>
 <% end %>

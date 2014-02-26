@@ -2,6 +2,7 @@ module Spree
   class DeliverySlot < ActiveRecord::Base
     has_many :delivery_exceptions, dependent: :destroy
     has_many :orders
+    belongs_to :delivery_city
 
     validates :name, presence: true, length: { in: 1..250 }
     validates :enabled, presence: true
@@ -10,11 +11,45 @@ module Spree
     validates :max_orders, numericality: { only_integer: true }
     validates :sequence, presence: true, numericality: { only_integer: true }, uniqueness: true
     validates :delay, presence: true, numericality: { only_integer: true }
+    validates :delivery_city_id, presence: true
+    validates :price_next_day, :price_same_day, :discount_price, presence: true, numericality: true
 
     default_scope -> { order('sequence asc') }
 
     def full_name
       "#{name} (#{days})"
+    end
+
+    def city_name
+      delivery_city.name
+    end
+
+    def discounted?(date)
+      discount_days.to_s.include?(Date::DAYNAMES[date.wday])
+    end
+
+    def availabled?(date)
+      not_exception?(date) && delivered?(date) && time_not_ended?(date) && not_full?(date)
+    end
+
+    def slot_time(date)
+      Time.at(date.to_time.to_i + start_hour * 3600)
+    end
+
+    def not_exception?(date)
+      delivery_exceptions.where(date: date).empty?
+    end
+
+    def delivered?(date)
+      days.to_s.include?(Date::DAYNAMES[date.wday])
+    end
+
+    def time_not_ended?(date)
+      (slot_time(date) - Time.current).round > (delay * 3600)
+    end
+
+    def not_full?(date)
+      orders.where(delivery_date: date).count < max_orders
     end
 
     class << self

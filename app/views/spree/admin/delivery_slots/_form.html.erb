@@ -15,6 +15,11 @@
           <%= f.check_box :enabled %>
         </div>
         <div  class="field">
+          <%= f.label :delivery_city_id, 'Delivery City' %>
+          <br />
+          <%= f.select :delivery_city_id, Spree::DeliveryCity.all.map{|d_c| [d_c.name, d_c.id] } %>
+        </div>
+        <div  class="field">
           <%= f.label :name, 'Name (will be visible to customers)' %>
           <%= f.text_field :name, :class => 'fullwidth' %>
         </div>
@@ -42,6 +47,33 @@
           <br />
           <%= f.number_field :max_orders %>
         </div>
+        <div class="field">
+          <%= f.label :price_next_day, 'Price for Next Day' %>
+          <br />
+          <%= f.number_field :price_next_day %>
+        </div>
+        <div class="field">
+          <%= f.label :price_same_day, 'Price for Same Day' %>
+          <br />
+          <%= f.number_field :price_same_day %>
+        </div>
+        <div  class="field">
+          <%= f.label :discount_days, 'Discount Days' %>
+          <br />
+          <% %w(Monday Tuesday Wednesday Thursday Friday Saturday Sunday).each do |wd| %>
+              <label>
+                <%= check_box_tag 'delivery_slot[discount_days][]', wd, f.object.discount_days.present? ? f.object.discount_days.split(',').include?(wd) : false %>
+                <%= wd %>
+              </label>
+              <br />
+          <% end %>
+        </div>
+        <div class="field">
+          <%= f.label :discount_price, 'Discount Price' %>
+          <br />
+          <%= f.number_field :discount_price %>
+        </div>
+
       </div>
     </fieldset>
   </div>

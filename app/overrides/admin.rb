@@ -10,9 +10,9 @@ Deface::Override.new(:virtual_path => "spree/admin/orders/_form",
                      :disabled => false)
 
 Deface::Override.new(:virtual_path => "spree/admin/shared/_order_tabs",
-                     :name => "add_delivery_date_to_admin_order_information",
+                     :name => "add_delivery_info_to_admin_order_information",
                      :insert_after => "#order_total",
-                     :partial => "spree/admin/shared/admin_order_information_delivery_date",
+                     :partial => "spree/admin/shared/admin_order_information_delivery_info",
                      :disabled => false)
 
 Deface::Override.new(:virtual_path => "spree/admin/orders/index",

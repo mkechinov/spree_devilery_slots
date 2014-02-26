@@ -4,14 +4,12 @@
     %thead
       %th= Spree.t(:date)
       %th Slot
+      %th City
     %tbody
       %td= @order.delivery_date
       %td= @order.delivery_slot.try(:name)
+      %td= @order.delivery_slot.try(:city_name)
   .delivery-instructions
     %label= Spree.t(:delivery_instructions)
     %span
-      - if @order.delivery_instructions.nil?
-        No instructions provided
-      - else
-        = @order.delivery_instructions
-
+      = @order.delivery_instructions || "No instructions provided"

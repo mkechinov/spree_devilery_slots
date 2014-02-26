@@ -1,0 +1,42 @@
+<%= render 'spree/admin/shared/configuration_menu' %>
+
+<% content_for :page_title do %>
+  <%= 'Delivery cities' %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li>
+    <%= button_link_to 'New delivery city', new_object_url, :icon => 'icon-plus' %>
+  </li>
+<% end %>
+
+<% if @delivery_cities.any? %>
+  <table class="index">
+    <colgroup>
+      <col style="width: 15%">
+      <col style="width: 15%">
+    </colgroup>
+    <thead>
+      <tr data-hook="rate_header">
+        <th>Name</th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @delivery_cities.each do |delivery_city|%>
+      <tr class="<%= cycle('odd', 'even')%>">
+        <td class="align-center"><%= delivery_city.name %></td>
+        <td class="actions">
+          <%= link_to_edit delivery_city, :no_text => true %>
+          <%= link_to_delete delivery_city, :no_text => true %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alpha twelve columns no-objects-found">
+    No delivery cities found,
+    <%= link_to Spree.t(:add_one), spree.new_admin_delivery_city_path %>!
+  </div>
+<% end %>

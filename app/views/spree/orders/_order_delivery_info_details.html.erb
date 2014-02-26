@@ -1,0 +1,8 @@
+<div class="row steps-data">
+  <div class="columns sixteen">
+    <h6>Delivery Info</h6>
+    <div class="delivery-info">
+      <%= order.delivery_date ? "#{order.delivery_slot.try(:city_name)} #{order.delivery_date}" : 'Unknown' %>
+    </div>
+  </div>
+</div>

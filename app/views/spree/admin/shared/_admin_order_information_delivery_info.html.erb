@@ -1,5 +1,8 @@
+<dt>Delivery City:</dt>
+<dd id='delivery_city'><%= @order.delivery_slot.try(:city_name) || "Unknown" %></dd>
+
 <dt><%= t(:delivery_date) %>:</dt>
-<% if @order.delivery_date != nil %>
+<% if @order.delivery_date %>
   <dd id='delivery_date'><%= @order.delivery_date %><br/><%= @order.delivery_slot.try(:name) %></dd>
 <% else %>
   <dd id='delivery_date'>Unknown</dd>
