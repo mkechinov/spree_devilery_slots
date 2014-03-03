@@ -28,8 +28,8 @@
             <td><%= slot.name %></td>
 
             <% days.each_with_index do |day, day_number| %>
-              <% if slot.availabled?(day) %>
-                <td class="available-delivery-slot <%= (@order.delivery_date == day and @order.delivery_slot == slot) ? 'selected-delivery-slot' : '' %>" data-slot-id="<%= slot.id %>" data-date="<%= day %>">
+              <% if @order.selected_for?(slot, day) || slot.availabled?(day) %>
+                <td class="available-delivery-slot <%= @order.selected_for?(slot, day) ? 'selected-delivery-slot' : '' %>" data-slot-id="<%= slot.id %>" data-date="<%= day %>">
                   <% if day_number == 0 %>
                     <%= slot.price_same_day %>
                   <% elsif slot.discounted?(day) %>
