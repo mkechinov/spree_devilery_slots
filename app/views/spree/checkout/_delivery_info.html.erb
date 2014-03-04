@@ -14,37 +14,37 @@
 
   <table>
     <thead>
-      <th>Delivery windows:</th>
+    <th>Delivery windows:</th>
 
-      <% days.each do |day| %>
+    <% days.each do |day| %>
         <th><%= day.strftime("%a %m/%d") %></th>
-      <% end %>
+    <% end %>
     </thead>
 
     <tbody>
-      <% Spree::DeliveryCity.all.each do |city| %>
+    <% Spree::DeliveryCity.all.each do |city| %>
         <% city.delivery_slots.each do |slot| %>
-          <tr class="delivery_slots_for_<%= city.id %>">
-            <td><%= slot.name %></td>
+            <tr class="delivery_slots_for_<%= city.id %>">
+              <td><%= slot.name %></td>
 
-            <% days.each_with_index do |day, day_number| %>
-              <% if @order.selected_for?(slot, day) || slot.availabled?(day) %>
-                <td class="available-delivery-slot <%= @order.selected_for?(slot, day) ? 'selected-delivery-slot' : '' %>" data-slot-id="<%= slot.id %>" data-date="<%= day %>">
-                  <% if day_number == 0 %>
-                    <%= slot.price_same_day %>
-                  <% elsif slot.discounted?(day) %>
-                    <div class="old_price"><%= slot.price_next_day %></div><div class="discounted"><%= slot.discount_price %></div>
+              <% days.each_with_index do |day, day_number| %>
+                  <% if slot.availabled?(day) %>
+                      <td class="available-delivery-slot <%= slot.selected_for?(day, @order) ? 'selected-delivery-slot' : '' %>" data-slot-id="<%= slot.id %>" data-date="<%= day %>">
+                        <% if day_number == 0 %>
+                            <%= slot.price_same_day %>
+                        <% elsif slot.discounted?(day) %>
+                            <div class="old_price"><%= slot.price_next_day %></div><div class="discounted"><%= slot.discount_price %></div>
+                        <% else %>
+                            <%= slot.price_next_day %>
+                        <% end %>
+                      </td>
                   <% else %>
-                    <%= slot.price_next_day %>
+                      <td class="unavailable-delivery-slot"></td>
                   <% end %>
-                </td>
-              <% else %>
-                <td class="unavailable-delivery-slot"></td>
               <% end %>
-            <% end %>
-          </tr>
+            </tr>
         <% end %>
-      <% end %>
+    <% end %>
     </tbody>
   </table>
 

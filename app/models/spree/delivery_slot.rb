@@ -52,6 +52,10 @@ module Spree
       orders.where(delivery_date: date).count < max_orders
     end
 
+    def selected_for?(date, order)
+      orders.where(delivery_date: date).include? order
+    end
+
     class << self
       def available_at(date)
         res = where('days LIKE ?', "%#{Date::DAYNAMES[date.wday]}%").select do |slot|

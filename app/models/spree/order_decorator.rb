@@ -15,23 +15,21 @@ Spree::Order.class_eval do
   def valid_delivery_date?
     self.errors[:delivery_date] << 'cannot be blank' unless self.delivery_date
 
-    self.errors[:delivery_date].empty? ? true : false
+    self.errors[:delivery_date].empty?
   end
 
   def valid_delivery_slot?
     self.errors[:delivery_slot] << 'cannot be blank' unless self.delivery_slot
 
-    self.errors[:delivery_slot].empty? ? true : false
+    self.errors[:delivery_slot].empty?
   end
 
   def valid_delivery_slot_full?
-    self.errors[:delivery_slot] << 'not availabled' unless self.delivery_slot.availabled?(self.delivery_date)
+    unless self.delivery_slot.availabled?(self.delivery_date)
+      self.errors[:delivery_slot] << 'not availabled' if self.delivery_slot.orders.where(delivery_date: self.delivery_date).size > self.delivery_slot.max_orders
+    end
 
-    self.errors[:delivery_slot].empty? ? true : false
-  end
-
-  def selected_for?(slot, date)
-    delivery_date == date && delivery_slot == slot
+    self.errors[:delivery_slot].empty?
   end
 end
 
