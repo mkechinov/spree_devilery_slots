@@ -2,7 +2,7 @@ module Spree
   class DeliverySlot < ActiveRecord::Base
     has_many :delivery_exceptions, dependent: :destroy
     has_many :orders
-    has_many :reservations, class: 'Spree::DeliverySlotReservation'
+    has_many :reservations, class_name: 'Spree::DeliverySlotReservation'
     belongs_to :delivery_city
 
     validates :name, presence: true, length: { in: 1..250 }
