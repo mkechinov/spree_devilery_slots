@@ -26,7 +26,8 @@ Spree::Order.class_eval do
 
   def valid_delivery_slot_full?
     unless self.delivery_slot.availabled?(self.delivery_date)
-      self.errors[:delivery_slot] << 'not available' if self.delivery_slot.orders.where(delivery_date: self.delivery_date).size > self.delivery_slot.max_orders
+      orders_count = self.delivery_slot.orders.where(delivery_date: self.delivery_date).size + self.delivery_slot.reservations.active.size
+      self.errors[:delivery_slot] << 'not available' if orders_count > self.delivery_slot.max_orders
     end
 
     self.errors[:delivery_slot].empty?
