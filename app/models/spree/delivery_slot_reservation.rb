@@ -3,10 +3,12 @@ module Spree
     belongs_to :user
     belongs_to :delivery_slot
 
+    after_initialize :after_initialize
+
     scope :expired, -> { where('expires_at < ?',  Time.now) }
     scope :active,  -> { where('expires_at >= ?', Time.now) }
 
-    def initialize
+    def after_initialize
       self.expires_at = 1.hours.from_now
     end
 
