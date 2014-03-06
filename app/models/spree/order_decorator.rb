@@ -6,7 +6,7 @@ Spree::Order.class_eval do
 
   def valid_delivery_instructions?
     if self.delivery_instructions.length > 500
-      self.errors[:delivery_instructions] << 'cannot be longer than 500 charachters'
+      self.errors[:delivery_instructions] << 'cannot be longer than 500 characters'
       return false
     end
     true
@@ -26,7 +26,7 @@ Spree::Order.class_eval do
 
   def valid_delivery_slot_full?
     unless self.delivery_slot.availabled?(self.delivery_date)
-      self.errors[:delivery_slot] << 'not availabled' if self.delivery_slot.orders.where(delivery_date: self.delivery_date).size > self.delivery_slot.max_orders
+      self.errors[:delivery_slot] << 'not available' if self.delivery_slot.full?
     end
 
     self.errors[:delivery_slot].empty?
@@ -37,7 +37,12 @@ Spree::PermittedAttributes.checkout_attributes << :delivery_date
 Spree::PermittedAttributes.checkout_attributes << :delivery_slot_id
 Spree::PermittedAttributes.checkout_attributes << :delivery_instructions
 
-Spree::Order.state_machine.before_transition :to => :address, :do => :valid_delivery_instructions?
-Spree::Order.state_machine.before_transition :to => :address, :do => :valid_delivery_date?
-Spree::Order.state_machine.before_transition :to => :address, :do => :valid_delivery_slot?
-Spree::Order.state_machine.before_transition :to => :address, :do => :valid_delivery_slot_full?
+#Spree::Order.state_machine.before_transition :to => :address, :do => :valid_delivery_instructions?
+#Spree::Order.state_machine.before_transition :to => :address, :do => :valid_delivery_date?
+#Spree::Order.state_machine.before_transition :to => :address, :do => :valid_delivery_slot?
+#Spree::Order.state_machine.before_transition :to => :address, :do => :valid_delivery_slot_full?
+
+Spree::Order.state_machine.before_transition :to => :payment, :do => :valid_delivery_instructions?
+Spree::Order.state_machine.before_transition :to => :payment, :do => :valid_delivery_date?
+Spree::Order.state_machine.before_transition :to => :payment, :do => :valid_delivery_slot?
+Spree::Order.state_machine.before_transition :to => :payment, :do => :valid_delivery_slot_full?

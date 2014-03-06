@@ -2,6 +2,7 @@ module Spree
   class DeliverySlot < ActiveRecord::Base
     has_many :delivery_exceptions, dependent: :destroy
     has_many :orders
+    has_many :reservations, class_name: 'Spree::DeliverySlotReservation'
     belongs_to :delivery_city
 
     validates :name, presence: true, length: { in: 1..250 }
@@ -48,8 +49,12 @@ module Spree
       (slot_time(date) - Time.current).round > (delay * 3600)
     end
 
+    def full?(date)
+      !not_full?(date)
+    end
+
     def not_full?(date)
-      orders.where(delivery_date: date).count < max_orders
+      orders.where(delivery_date: date).count + reservations.where(delivery_date: date).count < max_orders
     end
 
     def selected_for?(date, order)
@@ -70,7 +75,9 @@ module Spree
       end
 
       def next_sequence
-        if max = unscoped.order('sequence desc').pluck(:sequence).first
+        max = unscoped.order('sequence desc').pluck(:sequence).first
+
+        if max
           max + 1
         else
           1
