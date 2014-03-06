@@ -50,3 +50,4 @@ Spree::Order.state_machine.before_transition :to => :payment, :do => :valid_deli
 Spree::Order.state_machine.before_transition :to => :payment, :do => :valid_delivery_date?
 Spree::Order.state_machine.before_transition :to => :payment, :do => :valid_delivery_slot?
 Spree::Order.state_machine.before_transition :to => :payment, :do => :valid_delivery_slot_full?
+Spree::Order.state_machine.before_transition :to => :payment, :do => :create_proposed_shipments
