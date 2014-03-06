@@ -31,6 +31,10 @@ Spree::Order.class_eval do
 
     self.errors[:delivery_slot].empty?
   end
+
+  def delivery_price
+    delivery_slot ? delivery_slot.total_price(delivery_date) : 0
+  end
 end
 
 Spree::PermittedAttributes.checkout_attributes << :delivery_date

@@ -61,6 +61,16 @@ module Spree
       orders.where(delivery_date: date).include? order
     end
 
+    def total_price(delivery_date, order_date = Date.current)
+      if order_date == delivery_date
+        price_same_day
+      elsif discounted?(delivery_date)
+        discount_price
+      else
+        price_next_day
+      end
+    end
+
     class << self
       def available_at(date)
         res = where('days LIKE ?', "%#{Date::DAYNAMES[date.wday]}%").select do |slot|
