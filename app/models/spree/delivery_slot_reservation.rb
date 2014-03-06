@@ -6,9 +6,8 @@ module Spree
     scope :expired, -> { where('expires_at < ?',  Time.now) }
     scope :active,  -> { where('expires_at >= ?', Time.now) }
 
-    def initialize(delivery_slot)
+    def initialize
       self.expires_at = 1.hours.from_now
-      self.delivery_slot = delivery_slot
     end
 
     def expired?
