@@ -26,8 +26,7 @@ Spree::Order.class_eval do
 
   def valid_delivery_slot_full?
     unless self.delivery_slot.availabled?(self.delivery_date)
-      orders_count = self.delivery_slot.orders.where(delivery_date: self.delivery_date).size + self.delivery_slot.reservations.active.size
-      self.errors[:delivery_slot] << 'not available' if orders_count > self.delivery_slot.max_orders
+      self.errors[:delivery_slot] << 'not available' if self.delivery_slot.full?
     end
 
     self.errors[:delivery_slot].empty?
@@ -42,3 +41,8 @@ Spree::Order.state_machine.before_transition :to => :address, :do => :valid_deli
 Spree::Order.state_machine.before_transition :to => :address, :do => :valid_delivery_date?
 Spree::Order.state_machine.before_transition :to => :address, :do => :valid_delivery_slot?
 Spree::Order.state_machine.before_transition :to => :address, :do => :valid_delivery_slot_full?
+
+#Spree::Order.state_machine.before_transition :to => :payment, :do => :valid_delivery_instructions?
+#Spree::Order.state_machine.before_transition :to => :payment, :do => :valid_delivery_date?
+#Spree::Order.state_machine.before_transition :to => :payment, :do => :valid_delivery_slot?
+#Spree::Order.state_machine.before_transition :to => :payment, :do => :valid_delivery_slot_full?

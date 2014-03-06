@@ -49,8 +49,12 @@ module Spree
       (slot_time(date) - Time.current).round > (delay * 3600)
     end
 
+    def full?(date)
+      !not_full?(date)
+    end
+
     def not_full?(date)
-      orders.where(delivery_date: date).count < max_orders
+      orders.where(delivery_date: date).count + reservations.where(delivery_date: date) < max_orders
     end
 
     def selected_for?(date, order)
