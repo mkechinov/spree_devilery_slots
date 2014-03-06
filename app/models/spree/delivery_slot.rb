@@ -54,7 +54,7 @@ module Spree
     end
 
     def not_full?(date)
-      orders.where(delivery_date: date).count + reservations.where(delivery_date: date) < max_orders
+      orders.where(delivery_date: date).count + reservations.where(delivery_date: date).count < max_orders
     end
 
     def selected_for?(date, order)
@@ -75,7 +75,9 @@ module Spree
       end
 
       def next_sequence
-        if max = unscoped.order('sequence desc').pluck(:sequence).first
+        max = unscoped.order('sequence desc').pluck(:sequence).first
+
+        if max
           max + 1
         else
           1
