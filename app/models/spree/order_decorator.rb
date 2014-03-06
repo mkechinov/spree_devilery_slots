@@ -26,7 +26,7 @@ Spree::Order.class_eval do
 
   def valid_delivery_slot_full?
     unless self.delivery_slot.availabled?(self.delivery_date)
-      self.errors[:delivery_slot] << 'not available' if self.delivery_slot.full?
+      self.errors[:delivery_slot] << 'not available' if self.delivery_slot.full?(self.delivery_date)
     end
 
     self.errors[:delivery_slot].empty?
