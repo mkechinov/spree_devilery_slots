@@ -29,7 +29,7 @@ module Spree
       discount_days.to_s.include?(Date::DAYNAMES[date.wday])
     end
 
-    def available_to_user(user, session, date)
+    def available_to_user?(user, session, date)
       r = self.reservations.current user, session
 
       return true if r.delivery_date == date
