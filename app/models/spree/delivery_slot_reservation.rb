@@ -24,7 +24,7 @@ module Spree
       self.expired.destroy_all
     end
 
-    def self.get_current
+    def self.current
       if spree_current_user && spree_current_user.delivery_slot_reservation && spree_current_user.delivery_slot_reservation.expired? == false
         return spree_current_user.delivery_slot_reservation
       end
