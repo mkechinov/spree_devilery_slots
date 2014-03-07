@@ -13,7 +13,7 @@ module Spree
     scope :active,  -> { where('expires_at >= ?', Time.now) }
 
     def after_initialize
-      self.expires_at = 1.hours.from_now
+      self.expires_at ||= 1.hours.from_now
     end
 
     def expired?
@@ -24,9 +24,9 @@ module Spree
       self.expired.destroy_all
     end
 
-    def self.current
-      if spree_current_user && spree_current_user.delivery_slot_reservation && spree_current_user.delivery_slot_reservation.expired? == false
-        return spree_current_user.delivery_slot_reservation
+    def self.current(user, session)
+      if user && user.delivery_slot_reservation && user.delivery_slot_reservation.expired? == false
+        return user.delivery_slot_reservation
       end
 
       if session && session[:session_id]
@@ -36,9 +36,9 @@ module Spree
       nil
     end
 
-    def self.destroy_current
-        spree_current_user.delivery_slot_reservation.destroy       if spree_current_user && spree_current_user.delivery_slot_reservation
-        self.where(user_session: session[:session_id]).destroy_all if session && session[:session_id]
+    def self.destroy_current(user, session)
+      user.delivery_slot_reservation.destroy if user && user.delivery_slot_reservation
+      self.where(user_session: session[:session_id]).destroy_all if session && session[:session_id]
     end
   end
 end
