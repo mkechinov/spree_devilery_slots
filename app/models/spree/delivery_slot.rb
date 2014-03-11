@@ -32,7 +32,7 @@ module Spree
     def available_to_user?(user, session, date)
       r = DeliverySlotReservation.current user, session
 
-      return true if r.delivery_date == date && r.delivery_slot_id == self.id
+      return true if r && r.delivery_date == date && r.delivery_slot_id == self.id
 
       available? date
     end
