@@ -29,14 +29,14 @@ module Spree
       discount_days.to_s.include?(Date::DAYNAMES[date.wday])
     end
 
-    def reserved?(user, session, date)
-      r = DeliverySlotReservation.current user, session
+    def reserved?(user, session_id, date)
+      r = DeliverySlotReservation.current user, session_id
 
       r && r.delivery_date == date && r.delivery_slot_id == self.id
     end
 
-    def available_to_user?(user, session, date)
-      reserved?(user, session, date) || available?(date)
+    def available_to_user?(user, session_id, date)
+      reserved?(user, session_id, date) || available?(date)
     end
 
     def available?(date)

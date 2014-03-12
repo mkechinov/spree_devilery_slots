@@ -24,21 +24,21 @@ module Spree
       self.expired.destroy_all
     end
 
-    def self.current(user, session)
+    def self.current(user, session_id)
       if user && user.delivery_slot_reservation && user.delivery_slot_reservation.expired? == false
         return user.delivery_slot_reservation
       end
 
-      if session && session[:session_id]
-        return self.active.where(user_session: session[:session_id]).last
+      if session_id
+        return self.active.where(user_session: session_id).last
       end
 
       nil
     end
 
-    def self.destroy_current(user, session)
+    def self.destroy_current(user, session_id)
       user.delivery_slot_reservation.destroy if user && user.delivery_slot_reservation
-      self.where(user_session: session[:session_id]).destroy_all if session && session[:session_id]
+      self.where(user_session: session_id).destroy_all if session_id
     end
   end
 end
