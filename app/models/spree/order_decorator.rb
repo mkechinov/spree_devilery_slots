@@ -1,6 +1,8 @@
 Spree::Order.class_eval do
   belongs_to :delivery_slot
 
+  attr_accessor :session_id
+
   require 'date'
   require 'spree/order/checkout'
 
@@ -26,7 +28,11 @@ Spree::Order.class_eval do
 
   def valid_delivery_slot_full?
     unless self.delivery_slot.available?(self.delivery_date)
-      self.errors[:delivery_slot] << 'not available' if self.delivery_slot.full?(self.delivery_date)
+      if  self.delivery_slot.full?(self.delivery_date) &&
+          self.delivery_slot.reserved?(self.user, self.session_id, self.delivery_date) == false
+
+        self.errors[:delivery_slot] << 'not available'
+      end
     end
 
     self.errors[:delivery_slot].empty?
