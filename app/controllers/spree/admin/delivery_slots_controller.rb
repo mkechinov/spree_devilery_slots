@@ -6,7 +6,8 @@ module Spree
       protected
         def join_weekdays
           params[:delivery_slot][:days] = params[:delivery_slot][:days].join(',') if params[:delivery_slot][:days]
-          params[:delivery_slot][:discount_days] = params[:delivery_slot][:discount_days].join(',') if params[:delivery_slot][:discount_days]
+          params[:delivery_slot][:discount_days] ||= [] # discount days may be empty
+          params[:delivery_slot][:discount_days] = params[:delivery_slot][:discount_days].join(',')
         end
     end
   end
