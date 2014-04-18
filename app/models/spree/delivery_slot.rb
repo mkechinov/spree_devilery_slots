@@ -6,7 +6,7 @@ module Spree
     belongs_to :delivery_city
 
     validates :name, presence: true, length: { in: 1..250 }
-    validates :enabled, presence: true
+    #validates :enabled, presence: true
     validates :start_hour, presence: true, numericality: { only_integer: true, less_than_or_equal_to: 24, greater_than_or_equal_to: 0 }
     validates :days, presence: true
     validates :max_orders, numericality: { only_integer: true }
