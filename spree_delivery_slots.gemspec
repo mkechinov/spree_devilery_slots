@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.summary     = 'Adds delivery slots functionality'
   s.description = 'You can manage your delivery slots in admin, specify cut-off hours for every slot, create exceptional dates'
 
-  s.homepage    = "https://github.com/AntonZh/spree_delivery_slots"
+  s.homepage    = "https://github.com/mkechinov/spree_delivery_slots"
 
   s.required_ruby_version = '>= 2.0.0'
 
